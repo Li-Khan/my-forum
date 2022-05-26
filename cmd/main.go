@@ -6,6 +6,7 @@ import (
 
 	"github.com/BurntSushi/toml"
 	"github.com/Li-Khan/my-forum/config"
+	"github.com/Li-Khan/my-forum/repository/postgres"
 )
 
 var configPath string
@@ -23,4 +24,11 @@ func main() {
 		log.Println(err)
 		return
 	}
+
+	db, err := postgres.NewPostgresRepository(config)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	defer db.Close()
 }
