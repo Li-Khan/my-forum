@@ -17,7 +17,6 @@ func NewPostgresRepository(c *config.Config) (db *pgxpool.Pool, err error) {
 	}()
 
 	dsn := fmt.Sprintf("postgres://%s:%s@%s%s/%s", c.UserDB, c.PasswordDB, c.HostDB, c.PortDB, c.NameDB)
-
 	cfg, err := pgxpool.ParseConfig(dsn)
 	if err != nil {
 		return nil, err
