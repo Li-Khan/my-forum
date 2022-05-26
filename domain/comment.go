@@ -27,16 +27,16 @@ type CommentRequestDTO struct {
 }
 
 type CommentUsecase interface {
-	Create(ctx context.Context, c *Comment) (id int64, err error)
-	Update(ctx context.Context, c *Comment) (err error)
+	Create(ctx context.Context, comment *Comment) (id int64, err error)
+	Update(ctx context.Context, comment *Comment) (err error)
 	GetByPostID(ctx context.Context, id int64) (comments []*CommentRequestDTO, err error)
 	GetByUserID(ctx context.Context, id int64) (comments []*CommentRequestDTO, err error)
 	Delete(ctx context.Context, id int64) (err error)
 }
 
 type CommentRepository interface {
-	Create(ctx context.Context, c *Comment) (id int64, err error)
-	Update(ctx context.Context, c *Comment) (err error)
+	Create(ctx context.Context, comment *Comment) (id int64, err error)
+	Update(ctx context.Context, comment *Comment) (err error)
 	GetByPostID(ctx context.Context, id int64) (comments []*CommentRequestDTO, err error)
 	GetByUserID(ctx context.Context, id int64) (comments []*CommentRequestDTO, err error)
 	Delete(ctx context.Context, id int64) (err error)
