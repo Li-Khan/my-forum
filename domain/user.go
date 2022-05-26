@@ -15,7 +15,12 @@ type User struct {
 	UpdatedAt time.Time `json:"updated_at,omitempty"`
 }
 
-type UserUsecase interface{}
+type UserUsecase interface {
+	Create(ctx context.Context, user *User) (id int64, err error)
+	Update(ctx context.Context, user *User) (err error)
+	GetByID(ctx context.Context, id int64) (user *User, err error)
+	Delete(ctx context.Context, id int64) (err error)
+}
 
 type UserRepository interface {
 	Create(ctx context.Context, user *User) (id int64, err error)
