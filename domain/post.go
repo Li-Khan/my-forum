@@ -39,16 +39,16 @@ type PostResponseDTO struct {
 }
 
 type PostUsecase interface {
-	Create(ctx context.Context, p *Post) (id int64, err error)
-	Update(ctx context.Context, p *Post) (err error)
+	Create(ctx context.Context, post *Post) (id int64, err error)
+	Update(ctx context.Context, post *Post) (err error)
 	GetAll(ctx context.Context) (posts *[]PostRequestDTO, err error)
 	GetByID(ctx context.Context, id int64) (post *PostRequestDTO, err error)
 	Delete(ctx context.Context, id int64) (err error)
 }
 
 type PostRepository interface {
-	Create(ctx context.Context, p *Post) (id int64, err error)
-	Update(ctx context.Context, p *Post) (err error)
+	Create(ctx context.Context, post *Post) (id int64, err error)
+	Update(ctx context.Context, post *Post) (err error)
 	GetAll(ctx context.Context) (posts *[]PostRequestDTO, err error)
 	GetByID(ctx context.Context, id int64) (post *PostRequestDTO, err error)
 	Delete(ctx context.Context, id int64) (err error)
