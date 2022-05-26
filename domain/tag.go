@@ -8,9 +8,9 @@ type Tag struct {
 }
 
 type TagUsecase interface {
-	Create(ctx context.Context, t *Tag) (id int64, err error)
+	Create(ctx context.Context, tag *Tag) (id int64, err error)
 }
 
 type TagRepository interface {
-	Create(ctx context.Context, t *Tag) (id int64, err error)
+	Create(ctx context.Context, tag *Tag) (id int64, err error)
 }
