@@ -16,5 +16,10 @@ func NewVoteCommentUsecase(v domain.VoteCommentRepository) domain.VoteCommentUse
 	}
 }
 
-func (v *voteCommentUsecase) Like(ctx context.Context, vp *domain.VoteComment) (err error)
-func (v *voteCommentUsecase) Dislike(ctx context.Context, vp *domain.VoteComment) (err error)
+func (v *voteCommentUsecase) Like(ctx context.Context, vp *domain.VoteComment) (err error) {
+	return nil
+}
+
+func (v *voteCommentUsecase) Dislike(ctx context.Context, vp *domain.VoteComment) (err error) {
+	return nil
+}

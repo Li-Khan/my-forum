@@ -3,11 +3,15 @@ package main
 import (
 	"flag"
 	"log"
+	"net/http"
+	"time"
 
 	"github.com/BurntSushi/toml"
 	"github.com/Li-Khan/my-forum/config"
+	"github.com/Li-Khan/my-forum/delivery/web"
 	"github.com/Li-Khan/my-forum/repository"
 	"github.com/Li-Khan/my-forum/repository/postgres"
+	"github.com/Li-Khan/my-forum/usecase"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/redis"
 	"github.com/gin-gonic/gin"
@@ -53,4 +57,37 @@ func main() {
 	postTagRepository := repository.NewPostTagRepository(db)
 	votePostRepository := repository.NewVotePostRepository(db)
 	voteCommentRepository := repository.NewVoteCommentRepository(db)
+
+	userUsecase := usecase.NewUserUsecase(userRepository)
+	postUsecase := usecase.NewPostUsecase(postRepository)
+	commentUsecase := usecase.NewCommentUsecase(commentRepository)
+	tagUsecase := usecase.NewTagUsecase(tagRepository)
+	postTagUsecase := usecase.NewPostTagUsecase(postTagRepository)
+	votePostUsecase := usecase.NewVotePostUsecase(votePostRepository)
+	voteCommentUsecase := usecase.NewVoteCommentUsecase(voteCommentRepository)
+
+	handler := &web.Handler{
+		UserUsecase:        userUsecase,
+		PostUsecase:        postUsecase,
+		CommentUsecase:     commentUsecase,
+		TagUsecase:         tagUsecase,
+		PostTagUsecase:     postTagUsecase,
+		VotePostUsecase:    votePostUsecase,
+		VoteCommentUsecase: voteCommentUsecase,
+	}
+
+	web.NewHandler(router, handler)
+
+	server := &http.Server{
+		Addr:         config.BindAddr,
+		Handler:      router,
+		ReadTimeout:  15 * time.Second,
+		WriteTimeout: 15 * time.Second,
+		IdleTimeout:  15 * time.Second,
+	}
+
+	err = server.ListenAndServe()
+	if err != nil {
+		log.Println(err)
+	}
 }
