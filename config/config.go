@@ -1,5 +1,6 @@
 package config
 
+// Config ...
 type Config struct {
 	BindAddr string `toml:"bind_addr"`
 
@@ -14,6 +15,7 @@ type Config struct {
 	CacheAddr     string `toml:"cache_addr"`
 }
 
+// * NewConfig - returns a config with standard values
 func NewConfig() *Config {
 	return &Config{
 		BindAddr: ":8080",
