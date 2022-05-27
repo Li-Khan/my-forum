@@ -10,7 +10,7 @@ import (
 
 func errorHandler(c *gin.Context, status int, err error) {
 	log.Println(err)
-	c.AbortWithStatusJSON(status, err)
+	c.JSON(status, err)
 }
 
 func getStatusCode(err error) (code int) {
@@ -21,6 +21,8 @@ func getStatusCode(err error) (code int) {
 		return http.StatusBadRequest
 	case mistake.ErrConflict:
 		return http.StatusConflict
+	case mistake.ErrUnauthorized:
+		return http.StatusUnauthorized
 	default:
 		return http.StatusInternalServerError
 	}

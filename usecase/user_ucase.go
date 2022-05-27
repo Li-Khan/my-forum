@@ -33,6 +33,14 @@ func (u *userUsecase) GetByID(ctx context.Context, id int64) (user *domain.User,
 	return nil, nil
 }
 
+func (u *userUsecase) GetByEmail(ctx context.Context, email string) (user *domain.User, err error) {
+	user, err = u.userRepo.GetByEmail(ctx, email)
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
+}
+
 func (u *userUsecase) Delete(ctx context.Context, id int64) (err error) {
 	return nil
 }

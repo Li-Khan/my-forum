@@ -15,16 +15,23 @@ type User struct {
 	UpdatedAt time.Time `json:"updated_at,omitempty"`
 }
 
+type UserRequestDTO struct {
+	Email    string `json:"email,omitempty"`
+	Password string `json:"password,omitempty"`
+}
+
 type UserUsecase interface {
-	Create(ctx context.Context, user *User) (id int64, err error)
-	Update(ctx context.Context, user *User) (err error)
-	GetByID(ctx context.Context, id int64) (user *User, err error)
-	Delete(ctx context.Context, id int64) (err error)
+	Create(ctx context.Context, user *User) (int64, error)
+	Update(ctx context.Context, user *User) error
+	GetByID(ctx context.Context, id int64) (*User, error)
+	GetByEmail(ctx context.Context, email string) (*User, error)
+	Delete(ctx context.Context, id int64) error
 }
 
 type UserRepository interface {
-	Create(ctx context.Context, user *User) (id int64, err error)
-	Update(ctx context.Context, user *User) (err error)
-	GetByID(ctx context.Context, id int64) (user *User, err error)
-	Delete(ctx context.Context, id int64) (err error)
+	Create(ctx context.Context, user *User) (int64, error)
+	Update(ctx context.Context, user *User) error
+	GetByID(ctx context.Context, id int64) (*User, error)
+	GetByEmail(ctx context.Context, email string) (*User, error)
+	Delete(ctx context.Context, id int64) error
 }

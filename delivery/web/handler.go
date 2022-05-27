@@ -20,6 +20,7 @@ type Handler struct {
 func NewHandler(r *gin.Engine, h *Handler) {
 	user := r.Group("/user")
 	user.POST("/signup", h.signup)
+	user.POST("/signin", h.signin)
 
 	// post := r.Group("/post")
 
