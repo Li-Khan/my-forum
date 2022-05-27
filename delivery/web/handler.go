@@ -16,8 +16,10 @@ type Handler struct {
 	VoteCommentUsecase domain.VoteCommentUsecase
 }
 
+// NewHandler ...
 func NewHandler(r *gin.Engine, h *Handler) {
-	// user := r.Group("/user")
+	user := r.Group("/user")
+	user.POST("/signup", h.signup)
 
 	// post := r.Group("/post")
 

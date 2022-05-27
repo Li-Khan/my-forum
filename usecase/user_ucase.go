@@ -17,7 +17,12 @@ func NewUserUsecase(u domain.UserRepository) domain.UserUsecase {
 }
 
 func (u *userUsecase) Create(ctx context.Context, user *domain.User) (id int64, err error) {
-	return 0, nil
+	id, err = u.userRepo.Create(ctx, user)
+	if err != nil {
+		return 0, err
+	}
+
+	return id, nil
 }
 
 func (u *userUsecase) Update(ctx context.Context, user *domain.User) (err error) {
