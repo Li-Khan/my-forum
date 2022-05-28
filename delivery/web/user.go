@@ -7,6 +7,7 @@ import (
 
 	"github.com/Li-Khan/my-forum/domain"
 	"github.com/Li-Khan/my-forum/lib/mistake"
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -41,7 +42,7 @@ func (h *Handler) signup(c *gin.Context) {
 	}
 
 	user.Password = ""
-	c.JSON(http.StatusCreated, user)
+	c.IndentedJSON(http.StatusCreated, user)
 }
 
 func (h *Handler) signin(c *gin.Context) {
@@ -69,9 +70,22 @@ func (h *Handler) signin(c *gin.Context) {
 		return
 	}
 
-	// TODO SESSION
+	err = h.setSession(c, user)
+	if err != nil {
+		errorHandler(c, getStatusCode(err), err)
+		return
+	}
 
-	c.JSON(http.StatusOK, user)
+	user.Password = ""
+	c.IndentedJSON(http.StatusOK, user)
+}
+
+func (h *Handler) signout(c *gin.Context) {
+	session := sessions.Default(c)
+	session.Clear()
+	session.Options(sessions.Options{MaxAge: -1})
+	session.Save()
+	c.JSON(http.StatusOK, nil)
 }
 
 func hashPassword(password string) (string, error) {

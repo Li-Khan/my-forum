@@ -1,7 +1,6 @@
 run:
 	docker-compose up -d
 	docker image prune
-	docker rmi alpine:latest
 
 stop:
 	docker-compose stop

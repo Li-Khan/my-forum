@@ -1,6 +1,7 @@
 package web
 
 import (
+	"github.com/Li-Khan/my-forum/delivery/web/middleware"
 	"github.com/Li-Khan/my-forum/domain"
 	"github.com/gin-gonic/gin"
 )
@@ -19,8 +20,11 @@ type Handler struct {
 // NewHandler ...
 func NewHandler(r *gin.Engine, h *Handler) {
 	user := r.Group("/user")
-	user.POST("/signup", h.signup)
-	user.POST("/signin", h.signin)
+	{
+		user.POST("/signup", middleware.InSessionAccessControl(h.signup))
+		user.POST("/signin", middleware.InSessionAccessControl(h.signin))
+		user.POST("/signout", middleware.NotSessionAccessControl(h.signout))
+	}
 
 	// post := r.Group("/post")
 
